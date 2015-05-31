@@ -1,0 +1,3 @@
+mentorship_master_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MentorshipMasterBundle:Default:index }
