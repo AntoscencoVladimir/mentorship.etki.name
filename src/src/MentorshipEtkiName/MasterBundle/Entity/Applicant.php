@@ -50,7 +50,25 @@ class Applicant
      * @type bool
      * @since 0.1.0
      */
-    private $isPrivate;
+    private $isPrivate = true;
+    /**
+     * Tells if applicant is still active.
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     *
+     * @type bool
+     * @since 0.1.0
+     */
+    private $isActive = true;
+    /**
+     * Applicant's email.
+     *
+     * @ORM\Column(type="string", length=64)
+     *
+     * @type string
+     * @since 0.1.0
+     */
+    private $email;
 
     /**
      * Returns identifier.
@@ -127,6 +145,56 @@ class Applicant
     public function setProfilePrivacy($isPrivate)
     {
         $this->isPrivate = $isPrivate;
+        return $this;
+    }
+
+    /**
+     * Returns isActive.
+     *
+     * @return boolean
+     * @since 0.1.0
+     */
+    public function isActiveProfile()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Sets isActive.
+     *
+     * @param boolean $isActive IsActive.
+     *
+     * @return $this Current instance.
+     * @since 0.1.0
+     */
+    public function setProfileAsActive($isActive)
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    /**
+     * Returns email.
+     *
+     * @return string
+     * @since 0.1.0
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Sets email.
+     *
+     * @param string $email Email.
+     *
+     * @return $this Current instance.
+     * @since 0.1.0
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
         return $this;
     }
 }
