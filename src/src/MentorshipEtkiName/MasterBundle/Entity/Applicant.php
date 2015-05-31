@@ -4,6 +4,8 @@ namespace Etki\Projects\MentorshipEtkiName\MasterBundle\Entity;
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Applicant entity.
@@ -20,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package Etki\Projects\MentorshipEtkiName\MasterBundle\Entity
  * @author  Etki <etki@etki.name>
  */
-class Applicant
+class Applicant implements Serializable
 {
     /**
      * Identifier.
@@ -37,6 +39,9 @@ class Applicant
      * Applicant name, as he/she thought would be best to introduce.
      *
      * @ORM\Column(type="string", length=64)
+     *
+     * @Assert\NotBlank(message="applicant.title.not_blank")
+     * @Assert\Length(max="64", maxMessage="applicant.title.too_long")
      *
      * @type string
      * @since 0.1.0
@@ -65,10 +70,23 @@ class Applicant
      *
      * @ORM\Column(type="string", length=64)
      *
+     * @Assert\Email(message="applicant.email.not_email")
+     * @Assert\NotBlank(message="applicant.email.not_blank")
+     * @Assert\Length(max="64", maxMessage="applicant.email.too_long")
+     *
      * @type string
      * @since 0.1.0
      */
     private $email;
+    /**
+     * Applicant's story.
+     *
+     * @ORM\Column(type="string")
+     *
+     * @type string
+     * @since 0.1.0
+     */
+    private $story;
 
     /**
      * Returns identifier.
@@ -128,7 +146,7 @@ class Applicant
      * @return boolean
      * @since 0.1.0
      */
-    public function isPrivateProfile()
+    public function getIsPrivate()
     {
         return $this->isPrivate;
     }
@@ -142,7 +160,7 @@ class Applicant
      * @return $this Current instance.
      * @since 0.1.0
      */
-    public function setProfilePrivacy($isPrivate)
+    public function setIsPrivate($isPrivate)
     {
         $this->isPrivate = $isPrivate;
         return $this;
@@ -154,7 +172,7 @@ class Applicant
      * @return boolean
      * @since 0.1.0
      */
-    public function isActiveProfile()
+    public function getIsActive()
     {
         return $this->isActive;
     }
@@ -167,7 +185,7 @@ class Applicant
      * @return $this Current instance.
      * @since 0.1.0
      */
-    public function setProfileAsActive($isActive)
+    public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
         return $this;
@@ -196,5 +214,57 @@ class Applicant
     {
         $this->email = $email;
         return $this;
+    }
+
+    /**
+     * Returns story.
+     *
+     * @return string
+     * @since 0.1.0
+     */
+    public function getStory()
+    {
+        return $this->story;
+    }
+
+    /**
+     * Sets story.
+     *
+     * @param string $story Story.
+     *
+     * @return $this Current instance.
+     * @since 0.1.0
+     */
+    public function setStory($story)
+    {
+        $this->story = $story;
+        return $this;
+    }
+
+    /**
+     * Serializes object.
+     *
+     * @return string
+     * @since 0.1.0
+     */
+    public function serialize()
+    {
+        return serialize(get_object_vars($this));
+    }
+
+    /**
+     * Performs deserialization.
+     *
+     * @param string $serializedData Data as a string.
+     *
+     * @return void
+     * @since 0.1.0
+     */
+    public function unserialize($serializedData)
+    {
+        $data = unserialize($serializedData);
+        foreach ($data as $property => $value) {
+            $this->$property = $value;
+        }
     }
 }

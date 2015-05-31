@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>applicant.title.not_blank</source>
+                <target>Имя не может быть пустым</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>applicant.title.too_long</source>
+                <target>Имя слишком длинное (макс. 64 символа)</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>applicant.email.not_blank</source>
+                <target>E-mail не может быть пустым</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>applicant.email.not_email</source>
+                <target>E-mail не соответствует ожидаемому шаблону</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>applicant.email.too_long</source>
+                <target>E-mail слишком длинный (макс. 64 символа)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

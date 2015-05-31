@@ -26,3 +26,5 @@ parameters:
     system.executable.coffee:    /usr/local/bin/coffee
     system.executable.uglifyjs:  /usr/local/bin/uglifyjs
     system.executable.uglifycss: /usr/local/bin/uglifycss
+
+    application.active_applicant_limit: 3

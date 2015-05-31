@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>label.type.applicant.title</source>
+                <target>Имя</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>label.type.applicant.is_private</source>
+                <target>Никогда не показывать эти данные на главной</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>label.type.applicant.email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>label.type.applicant.story</source>
+                <target>Короткий рассказ о себе (по желанию)</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>label.type.applicant.is_active</source>
+                <target>Активен</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>label.type.applicant.photo</source>
+                <target>Фотография</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>label.form.application.submit</source>
+                <target>Отправить заявку</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

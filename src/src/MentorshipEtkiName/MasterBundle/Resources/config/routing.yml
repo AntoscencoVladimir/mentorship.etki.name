@@ -1,9 +1,19 @@
-homepage:
-  path: /{language}
-  defaults:
-    _controller: MentorshipMasterBundle:Master:index
-    language: 'ru'
-applicant_form:
+application_form:
   path: /form
   defaults:
     _controller: MentorshipMasterBundle:Master:form
+  methods: [GET]
+application_success_message:
+  path: /form/success
+  defaults:
+    _controller: MentorshipMasterBundle:Master:formSuccess
+application_form_processor:
+  path: /form
+  defaults:
+    _controller: MentorshipMasterBundle:Master:formProcessor
+  methods: [POST]
+homepage:
+  path: /
+  defaults:
+    _controller: MentorshipMasterBundle:Master:index
+    language: 'ru'

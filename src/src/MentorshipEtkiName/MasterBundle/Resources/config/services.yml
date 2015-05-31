@@ -1,4 +1,7 @@
 services:
-#    mentorship_master.example:
-#        class: Etki\Projects\MentorshipEtkiName\MasterBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    name.etki.mentorship.master.form_entity_data_extractor:
+        class: Etki\Projects\MentorshipEtkiName\MasterBundle\Service\FormEntityDataExtractor
+    name.etki.mentorship.master.doctrine_result_cache_cleaner:
+        class: Etki\Projects\MentorshipEtkiName\MasterBundle\Service\SimpleDoctrineCacheCleaner
+        arguments:
+            - @doctrine_cache.providers.doctrine.orm.default_result_cache
