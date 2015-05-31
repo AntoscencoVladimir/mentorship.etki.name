@@ -1,3 +1,9 @@
-mentorship_master_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: MentorshipMasterBundle:Default:index }
+homepage:
+  path: /{language}
+  defaults:
+    _controller: MentorshipMasterBundle:Master:index
+    language: 'ru'
+applicant_form:
+  path: /form
+  defaults:
+    _controller: MentorshipMasterBundle:Master:form

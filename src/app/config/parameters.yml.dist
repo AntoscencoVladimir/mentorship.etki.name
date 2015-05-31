@@ -17,3 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # Customization
+    system.executable.sass:      /usr/local/bin/sass
+    system.executable.compass:   /usr/local/bin/compass
+    system.executable.java:      /usr/bin/java
+    system.executable.node:      /usr/bin/nodejs
+    system.executable.coffee:    /usr/local/bin/coffee
+    system.executable.uglifyjs:  /usr/local/bin/uglifyjs
+    system.executable.uglifycss: /usr/local/bin/uglifycss

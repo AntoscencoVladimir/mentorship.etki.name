@@ -2,12 +2,37 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Etki: mentoring{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css"/>
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="main-container">
+            <header>
+            {% block header %}
+                <div class="container">
+                    <nav class="navbar">
+                        <div class="navbar-header">
+                            <a href="/" class="navbar-brand">{% block header_title %}{% endblock %}</a>
+                        </div>
+                    </nav>
+                </div>
+            {% endblock %}
+            </header>
+            <div class="container">
+            {% block body %}{% endblock %}
+            </div>
+        </div>
+        <footer>
+            <div class="container">
+                {% block footer %}{% endblock %}
+            </div>
+        </footer>
+        {% block javascripts %}
+            <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        {% endblock %}
     </body>
 </html>

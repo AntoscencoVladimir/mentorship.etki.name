@@ -3,11 +3,17 @@
 namespace Etki\Projects\MentorshipEtkiName\MasterBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Single application entity (not the application that is run, but applicant's
  * application for mentorship).
+ *
+ * @ORM\Entity()
+ * @ORM\Table(name="application")
+ *
+ * @IgnoreAnnotation("type")
  *
  * @SuppressWarnings(PHPMD.ShortVariableName)
  *
@@ -32,12 +38,16 @@ class Application
     /**
      * Day the mentorship has started.
      *
+     * @ORM\Column(name="started_at", type="date")
+     *
      * @type DateTime
      * @since 0.1.0
      */
     private $startedAt;
     /**
      * Day the mentorship has ended.
+     *
+     * @ORM\Column(name="finished_at", type="date")
      *
      * @type DateTime
      * @since 0.1.0

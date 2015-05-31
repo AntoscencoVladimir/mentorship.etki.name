@@ -2,13 +2,16 @@
 
 namespace Etki\Projects\MentorshipEtkiName\MasterBundle\Entity;
 
+use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Applicant entity.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Etki\Projects\MentorshipEtkiName\MasterBundle\Repository\ApplicantRepository")
  * @ORM\Table(name="applicant")
+ *
+ * @IgnoreAnnotation("type")
  *
  * @SuppressWarnings(PHPMD.ShortVariableName)
  *
