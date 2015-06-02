@@ -29,3 +29,4 @@ parameters:
 
     application.active_applicant_limit: 3
     application.admin_password: admin
+    application.admin_email: ~
