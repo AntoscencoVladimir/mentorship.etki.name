@@ -1,0 +1,10 @@
+{% extends '::email/base.html.twig' %}
+{% block content %}
+  <p>
+    Эй, E.
+  </p>
+  <p>
+    К тебе, кажется, опять кто-то записался. Пожалуй, тебе
+    <a href="{{ url('admin_dashboard') }}">стоит проверить</a>.
+  </p>
+{% endblock %}

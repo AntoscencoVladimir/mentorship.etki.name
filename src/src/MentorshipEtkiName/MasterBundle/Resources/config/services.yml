@@ -5,3 +5,18 @@ services:
         class: Etki\Projects\MentorshipEtkiName\MasterBundle\Service\SimpleDoctrineCacheCleaner
         arguments:
             - @doctrine_cache.providers.doctrine.orm.default_result_cache
+    name.etki.mentorship.master.doctrine_event_listener:
+        class: Etki\Projects\MentorshipEtkiName\MasterBundle\Listener\DoctrineListener
+        arguments:
+            - @name.etki.mentorship.master.doctrine_result_cache_cleaner
+        tags:
+            - { name: doctrine.event_listener, event: postFlush, method: postFlush }
+    name.etki.mentorship.master.application_listener:
+        class: Etki\Projects\MentorshipEtkiName\MasterBundle\Listener\MailEventListener
+        arguments:
+            - @mailer
+            - @templating
+            - %mailer_user%
+            - %application.admin_email%
+        tags:
+            - { name: kernel.event_listener, event: name.etki.mentorship.application, method: onApplication }

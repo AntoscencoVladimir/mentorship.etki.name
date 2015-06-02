@@ -1,0 +1,14 @@
+{% extends '::email/base.html.twig' %}
+{% block content %}
+  <p>
+    Привет, {{ applicant.title }}.
+  </p>
+  <p>
+    Это письмо подтверждает запись на сайте
+    <a href="{{ url('homepage') }}">mentorship.etki.name</a>.
+  </p>
+  <p>
+    Stay tuned.<br/>
+    // E
+  </p>
+{% endblock %}

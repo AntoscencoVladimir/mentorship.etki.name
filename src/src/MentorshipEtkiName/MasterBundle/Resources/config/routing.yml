@@ -1,19 +1,35 @@
 application_form:
   path: /form
-  defaults:
-    _controller: MentorshipMasterBundle:Master:form
+  defaults: { _controller: MentorshipMasterBundle:Master:form }
   methods: [GET]
 application_success_message:
   path: /form/success
-  defaults:
-    _controller: MentorshipMasterBundle:Master:formSuccess
+  defaults: { _controller: MentorshipMasterBundle:Master:formSuccess }
 application_form_processor:
   path: /form
-  defaults:
-    _controller: MentorshipMasterBundle:Master:formProcessor
+  defaults: { _controller: MentorshipMasterBundle:Master:formProcessor }
   methods: [POST]
 homepage:
   path: /
   defaults:
     _controller: MentorshipMasterBundle:Master:index
     language: 'ru'
+admin_dashboard:
+  path: /admin
+  defaults: { _controller: MentorshipMasterBundle:Admin:index }
+admin_drop_cache_handle:
+  path: /admin/actions/drop-cache
+  defaults: { _controller: MentorshipMasterBundle:Admin:dropCache }
+
+admin_applicant_start_application:
+  path: /admin/actions/applicant/{id}/start
+  defaults: { _controller: MentorshipMasterBundle:Applicant:startApplication }
+  methods: [POST]
+admin_applicant_finish_application:
+  path: /admin/actions/applicant/{id}/finish
+  defaults: { _controller: MentorshipMasterBundle:Applicant:finishApplication }
+  methods: [POST]
+admin_applicant_toggle_active_state:
+  path: /admin/actions/applicant/{id}/toggle-active
+  defaults: { _controller: MentorshipMasterBundle:Applicant:toggleActiveState }
+  methods: [POST]

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html style="padding: 0; margin: 0; font-family: sans-serif;">
+<head>
+  <title>{% block title %}Уведомление // {{ url('homepage') }}{% endblock %}</title>
+  <style>
+    a:hover {
+      color: #23527c !important;
+    }
+  </style>
+</head>
+<body style="padding: 0 50px; margin: 0;">
+<div style="width: 500px;">
+  <div style="padding: 15px; border-bottom: 1px solid #337ab7;">
+    {% block header %}
+    <a href="{{ url('homepage') }}"
+       style="font-size: 18px; color: #337ab7; text-decoration: none;">
+      Etki: mentoring
+    </a>
+    {% endblock %}
+  </div>
+  <div style="padding: 40px 0;">
+    <div>{% block content %}{% endblock %}</div>
+  </div>
+  <div style="padding: 15px; text-align: center; border-top: 1px solid #337ab7;">
+    {% block footer %}
+    Etki //
+    <a href="{{ url('homepage') }}"
+       style="color: #337ab7; text-decoration: none;">
+      mentorship.etki.name
+    </a>
+    {% endblock %}
+  </div>
+</div>
+</body>
+</html>

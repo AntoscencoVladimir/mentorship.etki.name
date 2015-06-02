@@ -4,12 +4,13 @@ namespace Etki\Projects\MentorshipEtkiName\MasterBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Etki\Projects\MentorshipEtkiName\MasterBundle\Entity\Applicant;
+use Etki\Projects\MentorshipEtkiName\MasterBundle\Event\ApplicationEvent;
 use Etki\Projects\MentorshipEtkiName\MasterBundle\Form\Type\ApplicantType;
 use Etki\Projects\MentorshipEtkiName\MasterBundle\Repository\ApplicantRepository;
 use Etki\Projects\MentorshipEtkiName\MasterBundle\Repository\LinkRepository;
 use Etki\Projects\MentorshipEtkiName\MasterBundle\Service\FormEntityDataExtractor;
-use Etki\Projects\MentorshipEtkiName\MasterBundle\Service\SimpleDoctrineCacheCleaner;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,7 @@ class MasterController extends Controller
      * @since 0.1.0
      */
     const APPLICANT_SESSION_KEY = 'applicant_form';
+
     /**
      * This action serves the default homepage.
      *
@@ -48,14 +50,13 @@ class MasterController extends Controller
             'MentorshipMasterBundle:Master:index-%s.html.twig',
             $language
         );
-        /** @type EntityManager $entityManager */
-        $entityManager = $this->get('doctrine.orm.entity_manager');
         /** @type ApplicantRepository $applicantRepository */
-        $applicantRepository
-            = $entityManager->getRepository('MentorshipMasterBundle:Applicant');
+        $applicantRepository = $this
+            ->getDoctrine()
+            ->getRepository('MentorshipMasterBundle:Applicant');
         $context = [
             'links' => (new LinkRepository())->findAll(),
-            'active_applicants' => $applicantRepository->getActiveApplicants(),
+            'active_applicants' => $applicantRepository->getCurrentApplicants(),
             'counter' => $applicantRepository->getApplicantCount(),
         ];
         return $this->render($templateName, $context);
@@ -117,10 +118,10 @@ class MasterController extends Controller
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $entityManager->persist($applicant);
         $entityManager->flush($applicant);
-        $key = 'name.etki.mentorship.master.doctrine_result_cache_cleaner';
-        /** @type SimpleDoctrineCacheCleaner $cleaner */
-        $cleaner = $this->get($key);
-        $cleaner->purgeCache();
+        $event = new ApplicationEvent($applicant);
+        /** @type EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->get('event_dispatcher');
+        $eventDispatcher->dispatch('name.etki.mentorship.application', $event);
         return $this->redirectToRoute('application_success_message');
     }
 

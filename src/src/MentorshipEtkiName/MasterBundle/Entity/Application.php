@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Single application entity (not the application that is run, but applicant's
  * application for mentorship).
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Etki\Projects\MentorshipEtkiName\MasterBundle\Repository\ApplicationRepository")
  * @ORM\Table(name="application")
  *
  * @IgnoreAnnotation("type")

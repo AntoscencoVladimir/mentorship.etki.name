@@ -32,7 +32,19 @@ class ApplicantRepository extends EntityRepository
      *
      * @since 0.1.0
      */
-    const CACHE_ID_ACTIVE_APPLICANTS_COUNTER = 'ActiveApplicantsCounter';
+    const CACHE_ID_ACTIVE_APPLICANTS_SET = 'ActiveApplicantsCounter';
+    /**
+     * Active applicants counter cache ID suffix.
+     *
+     * @since 0.1.0
+     */
+    const CACHE_ID_INACTIVE_APPLICANTS_SET = 'ActiveApplicantsSet';
+    /**
+     * Waiting applicants cache ID suffix.
+     *
+     * @since 0.1.0
+     */
+    const CACHE_ID_WAITING_APPLICANTS_SET = 'WaitingApplicantsSET';
     /**
      * Returns amount of applicants.
      *
@@ -51,21 +63,89 @@ class ApplicantRepository extends EntityRepository
     }
 
     /**
-     * Returns list of active applicants.
+     * Returns list of current applicants.
      *
      * @return Applicant[]
      * @since 0.1.0
      */
-    public function getActiveApplicants()
+    public function getCurrentApplicants()
     {
+        $builder = $this->createQueryBuilder('a');
+        $subQueryBuilder = $this->_em->createQueryBuilder();
+        $subQuery = $subQueryBuilder
+            ->select('apl')
+            ->from('MentorshipMasterBundle:Application', 'apl')
+            ->where('apl.applicant = a')
+            ->andWhere('apl.finishedAt IS NULL')
+            ->getQuery();
+        $query = $builder
+            ->where($builder->expr()->exists($subQuery->getDQL()))
+            ->getQuery();
+        $cacheId = self::getCacheId(self::CACHE_ID_ACTIVE_APPLICANTS_SET);
+        $query->useResultCache(true, 3600, $cacheId);
+        return $query->getResult();
+    }
+
+    /**
+     * Returns list of inactive applicants.
+     *
+     * @return Applicant[]
+     * @since 0.1.0
+     */
+    public function getInactiveApplicants()
+    {
+        $builder = $this->createQueryBuilder('a');
+        $subQueryBuilder = $this->_em->createQueryBuilder();
+        $subQuery = $subQueryBuilder
+            ->select('1')
+            ->from('MentorshipMasterBundle:Application', 'apl')
+            ->where($subQueryBuilder->expr()->isNull('apl.finishedAt'))
+            ->andWhere(
+                $subQueryBuilder->expr()->eq('apl.applicant', 'a')
+            )->getDQL();
         $query = $this
             ->createQueryBuilder('a')
             ->distinct()
-            ->join('MentorshipMasterBundle:Application', 'apl')
-            ->where('apl.finishedAt IS NULL')
-            ->andWhere('apl.startedAt < CURRENT_TIMESTAMP()')
+            ->where('a.isActive = FALSE')
+            ->andWhere(
+                $builder->expr()->not(
+                    $builder->expr()->exists($subQuery)
+                )
+            )
             ->getQuery();
-        $cacheId = self::getCacheId(self::CACHE_ID_ACTIVE_APPLICANTS_COUNTER);
+        $cacheId = self::getCacheId(self::CACHE_ID_INACTIVE_APPLICANTS_SET);
+        $query->useResultCache(true, 3600, $cacheId);
+        return $query->getResult();
+    }
+
+    /**
+     * Retrieves list of applicants that are waiting for their turn.
+     *
+     * @return Applicant[]
+     * @since 0.1.0
+     */
+    public function getWaitingApplicants()
+    {
+        $builder = $this->createQueryBuilder('a');
+        $subQueryBuilder = $this->_em->createQueryBuilder();
+        $subQuery = $subQueryBuilder
+            ->select('1')
+            ->from('MentorshipMasterBundle:Application', 'apl')
+            ->where($subQueryBuilder->expr()->isNull('apl.finishedAt'))
+            ->andWhere(
+                $subQueryBuilder->expr()->eq('apl.applicant', 'a')
+            )->getDQL();
+        $query = $this
+            ->createQueryBuilder('a')
+            ->distinct()
+            ->where('a.isActive = TRUE')
+            ->andWhere(
+                $builder->expr()->not(
+                    $builder->expr()->exists($subQuery)
+                )
+            )
+            ->getQuery();
+        $cacheId = self::getCacheId(self::CACHE_ID_WAITING_APPLICANTS_SET);
         $query->useResultCache(true, 3600, $cacheId);
         return $query->getResult();
     }

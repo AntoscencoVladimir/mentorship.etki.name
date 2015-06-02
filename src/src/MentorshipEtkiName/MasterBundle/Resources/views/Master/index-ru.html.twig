@@ -93,15 +93,18 @@
   </section>
   <section{{ not active_applicants ? ' data-default-state="collapsed"'}}>
     <h2>Текущие студенты</h2>
-    <div class="horizontal-icon-list text-center text-muted">
+    <div class="horizontal-icon-list text-center text-muted applicant-list">
       {% for applicant in active_applicants %}
-        {% if applicant.isPrivateProfile() %}
-            <img src="{{ asset('private-profile.png') }}" alt="Приватный профиль"/>
-        {% else %}
-          {% if applicant.url %}<a href="{{ applicant.url }}">{% endif %}
-          <img src="{{ applicant.image }}" alt="{{ applicant.title }}"/>
-          {% if applicant.url %}</a>{% endif %}
-        {% endif %}
+        {% image '@MentorshipMasterBundle/Resources/public/images/icon/private-profile.png'
+          output='/assets/images/icon/private-profile.png' %}
+          <div class="applicant">
+            <img src="{{ asset_url }}"
+                 alt="{{ applicant.isPrivate ? 'Приватный профиль' : applicant.title }}"/>
+            <div class="title">
+              {{ applicant.isPrivate ? 'Приватный профиль' : applicant.title }}
+            </div>
+          </div>
+        {% endimage %}
       {% else %}
         Кажется, в данный момент я никого не учу.
       {% endfor %}

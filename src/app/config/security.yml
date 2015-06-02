@@ -1,7 +1,11 @@
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin: { password: %application.admin_password%, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
         dev:
@@ -9,4 +13,7 @@ security:
             security: false
 
         default:
-            anonymous: ~
+            pattern: ^/admin
+            http_basic: ~
+            anonymous: false
+

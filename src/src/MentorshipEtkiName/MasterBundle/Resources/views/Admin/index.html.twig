@@ -1,0 +1,80 @@
+{% extends 'MentorshipMasterBundle::admin.html.twig' %}
+{% block body %}
+  <section>
+    <h2>Текущие студенты</h2>
+    <div class="row">
+    {% for applicant in active_applicants %}
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">{{ applicant.title }}</h4>
+          </div>
+          <div class="panel-body">
+            {{ applicant.story|length > 50 ? applicant.story|slice(0, 50) ~ '...' : applicant.story }}
+          </div>
+          <div class="panel-footer text-right">
+            <form action="{{ path('admin_applicant_finish_application', {id: applicant.id}) }}" method="post">
+              <button type="submit" class="btn btn-sm btn-info">
+                <i class="fa fa-check"> Завершить</i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="text-center text-muted">Никого нет, вообще никого, чем ты занят?</div>
+    {% endfor %}
+    </div>
+  </section>
+  <section>
+    <h2>Свежая кровь</h2>
+    <div class="row">
+    {% for applicant in waiting_applicants %}
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">{{ applicant.title }}</h4>
+            </div>
+            <div class="panel-body">
+              <div>{{ applicant.email }}</div>
+              {{ applicant.story }}
+            </div>
+              <div class="panel-footer text-right">
+                {% if active_applicants|length < active_applicant_limit %}
+                  <form action="{{ path('admin_applicant_start_application', {id: applicant.id}) }}" method="post">
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"> Принять</i></button>
+                  </form>
+                {% endif %}
+                <form action="{{ path('admin_applicant_toggle_active_state', {id: applicant.id}) }}" method="post">
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-close"> Скрыть</i></button>
+                </form>
+              </div>
+          </div>
+        </div>
+    {% else %}
+      Чувак, кажется, у тебя проблемы с популярностью.
+    {% endfor %}
+    </div>
+  </section>
+  <section data-default-state="collapsed">
+    <h2>Список скрытых заявок</h2>
+    {% for applicant in inactive_applicants %}
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">{{ applicant.title }}</h4>
+          </div>
+          <div class="panel-body">
+            <div>{{ applicant.email }}</div>
+            {{ applicant.story }}
+          </div>
+          <div class="panel-footer text-right">
+            <form action="{{ path('admin_applicant_toggle_active_state', {id: applicant.id}) }}" method="post">
+              <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-refresh"> Вернуть в список активных</i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}
