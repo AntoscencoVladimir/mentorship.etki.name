@@ -43,6 +43,7 @@ assetic:
     bundles:
         - MentorshipMasterBundle
     java: %system.executable.java%
+    node: %system.executable.node%
     filters:
         cssrewrite: ~
         sass:
