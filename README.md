@@ -9,4 +9,6 @@ only to have more practice with it.
 
 Feel free to view the sources and do anything with them.
 
+And yes, whole interface is in russian language. I hope i'll fix it later.
+
   [site-url]: http://mentorship.etki.name
