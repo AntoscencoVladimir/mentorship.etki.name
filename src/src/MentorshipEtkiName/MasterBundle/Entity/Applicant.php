@@ -86,7 +86,7 @@ class Applicant implements Serializable
      * @type string
      * @since 0.1.0
      */
-    private $story;
+    private $story = '';
 
     /**
      * Returns identifier.
@@ -237,6 +237,7 @@ class Applicant implements Serializable
      */
     public function setStory($story)
     {
+        $story = $story ?: '';
         $this->story = $story;
         return $this;
     }
